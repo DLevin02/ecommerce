@@ -28,27 +28,27 @@ end
   end
 
   def checkout
-    line_items = LineItem.all
-    if line_items.empty?
-
-      redirect_to root_url
-    else
-
-    @order = current_order
-    @order = Order.update(user_id: current_user.id, subtotal: 0)
-
-    line_items.each do |line_item|
-
-      line_item.product.update(quanity: (line_item.product.quanity - line_item.quanity))
-      if @order.order_items[line_item.product_id].nil?
-        @order.order_items[line_item.product_id] = line_item.quanity
+    line_items = current_order.line_items
+  
+      if line_items.empty?
+        redirect_to root_url
       else
-        @order.order_items[line_item.product_id] += line_item.quanity
-      end
-
-      @order.subtotal += line_item.line_item_total
-
+        @order = current_order
+        @order.update(user_id: current_user.id, subtotal: 0)
+  
+    line_items.each do |line_item|
+      line_item.product.update(quanity: (line_item.product.quanity - line_item.quanity))
+  
+        if @order.order_items[line_item.product_id].nil?
+          @order.order_items[line_item.product_id] = line_item.quanity
+        else
+          @order.order_items[line_item.product_id] += line_item.quanity
+        end
+  
+        @order.subtotal += line_item.line_item_total
+  
     end
+  
 
   @order.save
 
@@ -87,7 +87,7 @@ end
       )
 
       session.delete(:order_id)
-      line_items.destroy_all
+      line_items.destroy
     
     rescue Stripe::CardError => e
       flash[:error] = e.message
@@ -95,3 +95,4 @@ end
     
   end
 end
+
