@@ -1,0 +1,14 @@
+<h1>Welcome to Amazons Biggest Competitor "#**** Ebay"</h1>
+<p>Give me your money</p>
+
+<% if current_user.nil? %>
+    <h5>Give us your money!</h5>
+    <% else %>
+    <h5>Take a look,<strong><%= current_user.name %></strong></h5>
+    <% end %>
+
+
+<%= render 'productloop' %>
+
+
+

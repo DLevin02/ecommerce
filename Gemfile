@@ -9,6 +9,11 @@ gem 'devise'
 gem 'carrierwave'
 gem 'cancancan'
 gem 'hirb'
+
+gem 'stripe'
+gem 'figaro'
+gem 'certified'
+
 gem 'jquery-rails'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
